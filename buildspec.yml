@@ -1,14 +1,15 @@
 version: 0.2
 env:
     secrets-manager:
-      TOKEN: secret1:sonartoken
+      TOKEN0: secret1:sonartoken
+      TOKEN1: secret2:SNYKtoken
 phases:
   install:
     runtime-versions:
       java: latest
   build:
     commands:
-      - mvn verify sonar:sonar -Dsonar.projectKey=javacicdaws -Dsonar.organization=javacicdaws -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$TOKEN
+      - mvn verify sonar:sonar -Dsonar.projectKey=javacicdaws -Dsonar.organization=javacicdaws -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$TOKEN0
 #Quality Gates for Static Application Security Scan(SAST) using SonarCloud
       - sleep 5
       - |-
@@ -21,7 +22,7 @@ phases:
       - |-
           apt-get update
           apt-get -y install maven 
-          SNYK_TOKEN=d83e8933-15e1-473e-af37-ff1e503bd582
+          SNYK_TOKEN=$TOKEN1
           export SNYK_TOKEN
           mvn snyk:test -fn 
 
